@@ -8,4 +8,8 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  test_and_build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/chechout@v4
