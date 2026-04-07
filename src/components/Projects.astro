@@ -1,0 +1,91 @@
+---
+import screenshotconfianza from '../assets/projects/screenshotconfianza.png';
+import traccarscreenshot from '../assets/projects/traccarscreenshot.png';
+import screenshottransportesfraylescanos from '../assets/projects/screenshottransportesfraylescanos.png';
+import gymscreenshot from '../assets/projects/gymscreenshot.png';
+import moodlescreenshot from '../assets/projects/moodlescreenshot.png';
+
+const projects = [
+  {
+    title: "Sistema Confianza - Ventas de Lotes",
+    description: "Sistema financiero inmobiliario para ventas a cuotas de terrenos loteados. Dashboard administrativo con gestión de clientes, contratos, pagos y reportes.",
+    tech: ["Laravel", "MySQL", "Spatie", "Livewire"],
+    image: screenshotconfianza,
+    link: null,
+  },
+  {
+    title: "Implementación Traccar GPS",
+    description: "Servidor GPS propio con Traccar personalizado. Interfaz custom para tracking de flota vehicular en tiempo real con notificaciones y reportes.",
+    tech: ["Traccar", "Docker", "Custom UI", "Linux"],
+    image: traccarscreenshot,
+    link: null,
+  },
+  {
+    title: "Plataforma Moodle + App Móvil",
+    description: "Plataforma educativa LMS completa con tema personalizado, módulos custom y aplicación móvil híbrida.",
+    tech: ["Moodle", "Ionic"],
+    image: moodlescreenshot,
+    link: null,
+  },
+  {
+    title: "Landing Fraylescanos - Transporte",
+    description: "Sitio web corporativo responsivo para empresa de transporte de carga. Optimización de performance, SEO y accesibilidad.",
+    tech: ["Astro", "Tailwind", "Performance"],
+    image: screenshottransportesfraylescanos,
+    link: null,
+  },
+  {
+    title: "Guerreros Gym",
+    description: "Sitio web para gimnasio con información de servicios, horarios, planes y contacto. Diseño moderno y responsivo.",
+    tech: ["Astro", "Tailwind", "Performance"],
+    image: gymscreenshot,
+    link: "https://guerrerosgym.sytes.net/",
+  },
+];
+---
+
+<section id="proyectos" class="py-20 bg-[#111827]">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-4">
+      Proyectos
+    </h2>
+    <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+      Trabajos realizados con tecnologías modernas
+    </p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {projects.map((project) => (
+        <a 
+          href={project.link || "#"}
+          target={project.link ? "_blank" : "_self"}
+          rel={project.link ? "noopener noreferrer" : ""}
+          class={`bg-[#0b0f19] rounded-lg border border-gray-800 overflow-hidden hover:border-[#3b82f6] transition-colors duration-200 ${project.link ? 'cursor-pointer' : 'pointer-events-none'}`}
+        >
+          <div class="h-56 overflow-hidden">
+            <img 
+              src={project.image.src} 
+              alt={project.title}
+              class={`w-full h-full object-contain bg-gray-900 hover:scale-105 transition-transform duration-300`}
+            />
+          </div>
+          
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-white mb-3">
+              {project.title}
+            </h3>
+            <p class="text-gray-400 mb-4">
+              {project.description}
+            </p>
+            <div class="flex flex-wrap gap-2">
+              {project.tech.map((t) => (
+                <span class="px-3 py-1 text-sm bg-[#3b82f6]/10 text-[#3b82f6] rounded-full border border-[#3b82f6]/20">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

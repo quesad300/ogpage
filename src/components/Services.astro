@@ -1,0 +1,56 @@
+---
+const services = [
+  {
+    title: "Desarrollo de sistemas web",
+    description: "Sistemas a medida adaptados a las necesidades de tu negocio con Laravel y React.",
+  },
+  {
+    title: "APIs Laravel",
+    description: "APIs RESTful robustas con autenticación, validación y documentación completa.",
+  },
+  {
+    title: "Dashboards administrativos",
+    description: "Paneles de control personalizados con estadísticas, gráficos y gestión de datos.",
+  },
+  {
+    title: "Integración Traccar",
+    description: "Implementación y personalización de servidores GPS Traccar con UI a medida.",
+  },
+  {
+    title: "LMS Moodle",
+    description: "Configuración, personalización de temas y desarrollo de plugins para Moodle.",
+  },
+  {
+    title: "Landing pages técnicas",
+    description: "Páginas de aterrizaje optimizadas para conversion y performance.",
+  },
+  {
+    title: "Mantenimiento de sistemas",
+    description: "Actualizaciones, optimización de rendimiento y soporte continuo.",
+  },
+];
+---
+
+<section id="servicios" class="py-20 bg-[#0b0f19]">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-4">
+      Servicios
+    </h2>
+    <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+      Soluciones técnicas especializadas para tu proyecto
+    </p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {services.map((service) => (
+        <div class="bg-[#111827] p-6 rounded-lg border border-gray-800 hover:border-[#3b82f6] transition-colors duration-200">
+          <h3 class="text-xl font-semibold text-white mb-3">
+            {service.title}
+          </h3>
+          <p class="text-gray-400">
+            {service.description}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

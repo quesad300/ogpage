@@ -1,0 +1,62 @@
+---
+const navLinks = [
+  { name: "Servicios", href: "#servicios" },
+  { name: "Proyectos", href: "#proyectos" },
+  { name: "Experiencia", href: "#experiencia" },
+  { name: "Stack", href: "#stack" },
+  { name: "Contacto", href: "#contacto" },
+];
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 bg-[#0b0f19]/90 backdrop-blur-md border-b border-gray-800">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <a href="#" class="text-xl font-bold text-white">
+        OG DevSecOps
+      </a>
+      
+      <div class="hidden md:flex items-center space-x-8">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-gray-300 hover:text-[#3b82f6] transition-colors duration-200"
+          >
+            {link.name}
+          </a>
+        ))}
+      </div>
+
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden p-2 text-gray-300 hover:text-white"
+        aria-label="Menú"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden bg-[#111827] border-t border-gray-800">
+    <div class="px-4 py-3 space-y-2">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="block py-2 text-gray-300 hover:text-[#3b82f6] transition-colors"
+        >
+          {link.name}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<script>
+  const btn = document.getElementById("mobile-menu-btn");
+  const menu = document.getElementById("mobile-menu");
+  
+  btn?.addEventListener("click", () => {
+    menu?.classList.toggle("hidden");
+  });
+</script>
