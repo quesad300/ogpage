@@ -1,13 +1,13 @@
 ---
 import "../styles/global.css";
-import WhatsAppButton from "../components/WhatsAppButton.astro";
 
 const SITE = "https://ogdevsecops.sytes.net";
 
-const OFFICIAL_TITLE =
-  "OGDevSecOps | José Oswaldo Guerrero Pérez — Desarrollador Backend y DevOps";
+const OFFICIAL_TITLE = "OGDevSecOps | Soluciones de software para empresas";
 const OFFICIAL_DESCRIPTION =
-  "Desarrollador Backend y DevOps con 8 años de experiencia: APIs y sistemas administrativos en Laravel, GPS con Traccar, Docker Swarm y Moodle. Proyectos y contacto.";
+  "OGDevSecOps desarrolla sistemas administrativos, APIs, plataformas GPS y formación en línea para empresas, con infraestructura propia y despliegue continuo.";
+const OFFICIAL_KEYWORDS =
+  "soluciones de software para empresas, ERP a medida, desarrollo web, APIs, plataformas GPS, formación en línea, apps móviles, infraestructura y despliegue";
 
 interface Props {
   title?: string;
@@ -26,35 +26,33 @@ const {
 const site = Astro.site || new URL(SITE);
 const canonicalURL = new URL(Astro.url.pathname, site);
 
-const LINKEDIN_PROFILE =
-  "https://www.linkedin.com/in/josé-oswaldo-guerrero-pérez";
 const LINKEDIN_COMPANY = "https://www.linkedin.com/company/ogdevsecops";
-const GITHUB = "https://github.com/quesad300";
-const YOUTUBE = "https://youtube.com/@OGDevSecOps";
-const FACEBOOK = "https://www.facebook.com/profile.php?id=61583853565636";
+const LINKEDIN_PROFILE =
+  "https://www.linkedin.com/in/jos%C3%A9-oswaldo-guerrero-p%C3%A9rez-2843791aa";
 
 const jsonld = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "Person",
-      name: "José Oswaldo Guerrero Pérez",
-      headline: "Desarrollador Backend y DevOps",
-      jobTitle: "Desarrollador Backend y DevOps",
-      url: SITE,
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: "Villaflores",
-        addressRegion: "Chiapas",
-        addressCountry: "MX",
-      },
-      sameAs: [LINKEDIN_PROFILE, LINKEDIN_COMPANY, GITHUB, YOUTUBE, FACEBOOK],
+      "@type": "Organization",
+      "@id": `${SITE}/#organization`,
+      name: "OGDevSecOps",
+      url: `${SITE}/`,
+      sameAs: [LINKEDIN_COMPANY],
+      description: OFFICIAL_DESCRIPTION,
+      founder: { "@id": `${SITE}/#person` },
     },
     {
       "@type": "WebSite",
       name: "OGDevSecOps",
       url: SITE,
       inLanguage: "es-MX",
+    },
+    {
+      "@type": "Person",
+      "@id": `${SITE}/#person`,
+      name: "José Oswaldo Guerrero Pérez",
+      sameAs: [LINKEDIN_PROFILE],
     },
   ],
 };
@@ -66,11 +64,8 @@ const jsonld = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta
-      name="keywords"
-      content="desarrollador backend, Laravel, Docker Swarm, APIs, Traccar GPS, Moodle, Chiapas, México"
-    />
-    <meta name="author" content="José Oswaldo Guerrero Pérez" />
+    <meta name="keywords" content={OFFICIAL_KEYWORDS} />
+    <meta name="author" content="OGDevSecOps" />
     <meta
       name="robots"
       content={noindex ? "noindex, nofollow" : "index, follow"}
@@ -95,7 +90,7 @@ const jsonld = {
     <meta property="og:image:height" content="630" />
     <meta
       property="og:image:alt"
-      content="OGDevSecOps — José Oswaldo Guerrero Pérez, Desarrollador Backend y DevOps"
+      content="OGDevSecOps — Soluciones de software para empresas"
     />
     <meta property="og:locale" content="es_MX" />
 
@@ -112,6 +107,5 @@ const jsonld = {
   </head>
   <body class="bg-[#0b0f19] text-[#e5e7eb] min-h-screen">
     <slot />
-    <WhatsAppButton />
   </body>
 </html>
