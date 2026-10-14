@@ -1,0 +1,32 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<MainLayout
+  title="Página no encontrada | OGDevSecOps"
+  description="La página que buscas no existe. Vuelve al inicio de OGDevSecOps."
+  noindex
+>
+  <Navbar />
+  <main class="min-h-screen flex items-center justify-center pt-16 px-4">
+    <div class="max-w-xl mx-auto text-center">
+      <p class="text-6xl sm:text-7xl font-bold text-[#3b82f6] mb-4">404</p>
+      <h1 class="text-3xl sm:text-4xl font-bold text-white mb-4">
+        Página no encontrada
+      </h1>
+      <p class="text-lg text-gray-400 mb-8">
+        La página que buscas no existe o fue movida. Puedes volver al inicio
+        para ver mis proyectos de desarrollo, infraestructura y DevOps.
+      </p>
+      <a
+        href="/"
+        class="inline-block px-8 py-3 bg-[#3b82f6] text-white font-medium rounded-lg hover:bg-blue-600 transition-colors duration-200"
+      >
+        Volver al inicio
+      </a>
+    </div>
+  </main>
+  <Footer />
+</MainLayout>

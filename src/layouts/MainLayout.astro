@@ -1,20 +1,62 @@
 ---
 import "../styles/global.css";
 
+const SITE = "https://ogdevsecops.sytes.net";
+
+const OFFICIAL_TITLE =
+  "OGDevSecOps | José Oswaldo Guerrero Pérez — Desarrollador Backend y DevOps";
+const OFFICIAL_DESCRIPTION =
+  "Desarrollador Backend y DevOps con 8 años de experiencia: APIs y sistemas administrativos en Laravel, GPS con Traccar, Docker Swarm y Moodle. Proyectos y contacto.";
+
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
   image?: string;
+  noindex?: boolean;
 }
 
-const { 
-  title, 
-  description = "Desarrollo sistemas web, dashboards administrativos, APIs e integraciones. Especializado en Laravel, React y soluciones a medida.",
-  image = "/logoogdevsecops.png"
+const {
+  title = OFFICIAL_TITLE,
+  description = OFFICIAL_DESCRIPTION,
+  image = "/og-image.png",
+  noindex = false,
 } = Astro.props;
 
-const site = Astro.site || new URL('https://oswaldoguerrero.dev');
+const site = Astro.site || new URL(SITE);
 const canonicalURL = new URL(Astro.url.pathname, site);
+
+const LINKEDIN_PROFILE =
+  "https://www.linkedin.com/in/josé-oswaldo-guerrero-pérez";
+const LINKEDIN_COMPANY = "https://www.linkedin.com/company/ogdevsecops";
+const GITHUB = "https://github.com/quesad300";
+const YOUTUBE = "https://youtube.com/@OGDevSecOps";
+const FACEBOOK = "https://www.facebook.com/profile.php?id=61583853565636";
+
+const jsonld = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      name: "José Oswaldo Guerrero Pérez",
+      headline: "Desarrollador Backend y DevOps",
+      jobTitle: "Desarrollador Backend y DevOps",
+      url: SITE,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Villaflores",
+        addressRegion: "Chiapas",
+        addressCountry: "MX",
+      },
+      sameAs: [LINKEDIN_PROFILE, LINKEDIN_COMPANY, GITHUB, YOUTUBE, FACEBOOK],
+    },
+    {
+      "@type": "WebSite",
+      name: "OGDevSecOps",
+      url: SITE,
+      inLanguage: "es-MX",
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -23,29 +65,47 @@ const canonicalURL = new URL(Astro.url.pathname, site);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    <meta name="author" content="Oswaldo Guerrero" />
-    <meta name="robots" content="index, follow" />
-    
+    <meta
+      name="keywords"
+      content="desarrollador backend, Laravel, Docker Swarm, APIs, Traccar GPS, Moodle, Chiapas, México"
+    />
+    <meta name="author" content="José Oswaldo Guerrero Pérez" />
+    <meta
+      name="robots"
+      content={noindex ? "noindex, nofollow" : "index, follow"}
+    />
+
     <link rel="canonical" href={canonicalURL.href} />
-    <link rel="icon" type="image/png" href="/logoogdevsecops.png" />
-    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+
     <title>{title}</title>
-    
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="OGDevSecOps" />
     <meta property="og:url" content={canonicalURL.href} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={new URL(image, site).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="OGDevSecOps — José Oswaldo Guerrero Pérez, Desarrollador Backend y DevOps"
+    />
     <meta property="og:locale" content="es_MX" />
-    
+
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@OGDevSecOps" />
     <meta name="twitter:url" content={canonicalURL.href} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL(image, site).href} />
-    
+
     <!-- Theme Color -->
     <meta name="theme-color" content="#0b0f19" />
   </head>
