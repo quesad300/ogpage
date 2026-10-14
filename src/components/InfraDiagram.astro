@@ -1,0 +1,148 @@
+---
+/**
+ * InfraDiagram.astro — diagrama animado del clúster de infraestructura.
+ *
+ * Etiquetas visibles: solo el conjunto aprobado (sin cifras ni sinónimos).
+ * Flujo L→R: VPN → Nginx · SSL → Managers/Workers → Contenedores,
+ * con satélites de CI/CD, monitoreo, Portainer y respaldos.
+ * Pulsos: CSS puro (pathLength=1 + stroke-dasharray), sin JS ni rAF.
+ * Sin JS o con prefers-reduced-motion el SVG queda estático y completo.
+ */
+
+const coreNodes = [
+  { cx: 80, cy: 210, grad: "halo-blue", delay: "0s" },
+  { cx: 240, cy: 210, grad: "halo-blue", delay: "-0.48s" },
+  { cx: 420, cy: 140, grad: "halo-blue", delay: "-0.96s" },
+  { cx: 420, cy: 300, grad: "halo-blue", delay: "-1.44s" },
+  { cx: 700, cy: 210, grad: "halo-blue", delay: "-1.92s" },
+];
+
+const satNodes = [
+  { cx: 160, cy: 60, grad: "halo-cyan", delay: "-0.24s" },
+  { cx: 330, cy: 60, grad: "halo-violet", delay: "-0.72s" },
+  { cx: 600, cy: 60, grad: "halo-cyan", delay: "-1.2s" },
+  { cx: 300, cy: 440, grad: "halo-violet", delay: "-1.68s" },
+  { cx: 640, cy: 440, grad: "halo-cyan", delay: "-2.16s" },
+];
+
+const flowLinks = [
+  { d: "M102 210 C140 210 200 210 218 210", delay: "0s" },
+  { d: "M262 210 C320 210 350 140 398 140", delay: "-0.43s" },
+  { d: "M262 210 C320 210 350 300 398 300", delay: "-0.86s" },
+  { d: "M450 140 C530 140 600 210 670 210", delay: "-1.29s" },
+  { d: "M450 300 C530 300 600 210 670 210", delay: "-1.72s" },
+];
+
+const satLinks = [
+  "M182 60 C230 60 260 60 308 60",
+  "M330 82 C340 110 370 125 405 136",
+  "M600 82 C600 120 545 145 438 140",
+  "M300 418 C290 370 330 330 400 304",
+  "M640 418 C660 380 690 330 700 230",
+];
+---
+
+<svg
+  class="infra-diagram w-full h-auto min-w-[640px]"
+  viewBox="0 0 880 520"
+  role="img"
+  aria-labelledby="infra-t infra-d"
+  data-reveal
+>
+  <title id="infra-t">Diagrama del clúster de infraestructura</title>
+  <desc id="infra-d">VPN → Nginx con SSL → clúster Docker Swarm con managers
+    y workers ejecutando contenedores Laravel, Moodle y otros sistemas;
+    GitHub Actions y GHCR, Portainer, Grafana y Prometheus, respaldos en la
+    nube.</desc>
+
+  <defs>
+    <radialGradient id="halo-blue">
+      <stop offset="0" stop-color="#3b82f6"></stop>
+      <stop offset="1" stop-color="#3b82f6" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="halo-cyan">
+      <stop offset="0" stop-color="#22d3ee"></stop>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="halo-violet">
+      <stop offset="0" stop-color="#a78bfa"></stop>
+      <stop offset="1" stop-color="#a78bfa" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+
+  <!-- Enlaces principales + pulsos sinápticos (solo CSS) -->
+  <g class="layer-links" style="--depth:.3">
+    {
+      flowLinks.map((link) => (
+        <>
+          <path d={link.d} class="link-base"></path>
+          <path
+            d={link.d}
+            pathLength="1"
+            class="synapse-pulse"
+            style={`animation-delay:${link.delay}`}
+          ></path>
+        </>
+      ))
+    }
+  </g>
+
+  <!-- Satélites: CI/CD, monitoreo, Portainer y respaldos -->
+  <g class="layer-satellites" style="--depth:1">
+    {satLinks.map((d) => <path d={d} class="link-dash"></path>)}
+    {
+      satNodes.map((n) => (
+        <g class="node">
+          <circle
+            class="node-halo"
+            cx={n.cx}
+            cy={n.cy}
+            r="22"
+            fill={`url(#${n.grad})`}
+            style={`animation-delay:${n.delay}`}
+          ></circle>
+          <circle class="node-core" cx={n.cx} cy={n.cy} r="6" fill="#3b82f6"
+          ></circle>
+        </g>
+      ))
+    }
+    <text x="160" y="36" text-anchor="middle" font-size="14" fill="#d1d5db">GitHub Actions</text>
+    <text x="330" y="36" text-anchor="middle" font-size="14" fill="#d1d5db">GHCR</text>
+    <text x="600" y="36" text-anchor="middle" font-size="14" fill="#d1d5db">Portainer</text>
+    <text x="300" y="480" text-anchor="middle" font-size="14" fill="#d1d5db">Grafana + Prometheus</text>
+    <text x="640" y="480" text-anchor="middle" font-size="14" fill="#d1d5db">Respaldos en la nube</text>
+  </g>
+
+  <!-- Núcleo: VPN → Nginx · SSL → Managers/Workers → Contenedores -->
+  <g class="layer-core" style="--depth:.6">
+    {
+      coreNodes.map((n) => (
+        <g class="node">
+          <circle
+            class="node-halo"
+            cx={n.cx}
+            cy={n.cy}
+            r="22"
+            fill={`url(#${n.grad})`}
+            style={`animation-delay:${n.delay}`}
+          ></circle>
+          <circle class="node-core" cx={n.cx} cy={n.cy} r="6" fill="#3b82f6"
+          ></circle>
+        </g>
+      ))
+    }
+  </g>
+
+  <!-- Etiquetas del flujo (sin cifras) -->
+  <g class="layer-labels" style="--depth:.6">
+    <text x="80" y="252" text-anchor="middle" font-size="15" fill="#e5e7eb">VPN</text>
+    <text x="240" y="252" text-anchor="middle" font-size="15" fill="#e5e7eb">Nginx · SSL</text>
+    <text x="420" y="100" text-anchor="middle" font-size="15" fill="#e5e7eb">Managers</text>
+    <text x="420" y="344" text-anchor="middle" font-size="15" fill="#e5e7eb">Workers</text>
+    <text x="420" y="220" text-anchor="middle" font-size="14" fill="#9ca3af">Clúster Docker Swarm</text>
+    <text x="700" y="170" text-anchor="middle" font-size="15" fill="#e5e7eb">Contenedores</text>
+    <text x="735" y="196" text-anchor="start" font-size="14" fill="#9ca3af">Laravel</text>
+    <text x="735" y="226" text-anchor="start" font-size="14" fill="#9ca3af">Moodle</text>
+    <text x="735" y="256" text-anchor="start" font-size="14" fill="#9ca3af">otros sistemas</text>
+  </g>
+</svg>
