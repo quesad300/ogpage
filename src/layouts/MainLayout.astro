@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { faqs } from "../data/faq";
 
 const SITE = "https://ogdevsecops.sytes.net";
 
@@ -39,8 +40,21 @@ const jsonld = {
       "@id": `${SITE}/#organization`,
       name: "OGDevSecOps",
       url: `${SITE}/`,
-      sameAs: [LINKEDIN_COMPANY],
+      logo: `${SITE}/logoogdevsecops.png`,
+      sameAs: [
+        LINKEDIN_COMPANY,
+        "https://github.com/quesad300",
+        "https://www.youtube.com/@OGDevSecOps",
+        "https://www.facebook.com/profile.php?id=61583853565636",
+      ],
       description: OFFICIAL_DESCRIPTION,
+      areaServed: ["México", "Remoto (internacional)"],
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer support",
+        email: "joseoswaldogperez@gmail.com",
+        availableLanguage: ["es"],
+      },
       founder: { "@id": `${SITE}/#person` },
     },
     {
@@ -54,6 +68,18 @@ const jsonld = {
       "@id": `${SITE}/#person`,
       name: "José Oswaldo Guerrero Pérez",
       sameAs: [LINKEDIN_PROFILE],
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE}/#faq`,
+      mainEntity: faqs.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: f.answer,
+        },
+      })),
     },
   ],
 };
