@@ -1,21 +1,36 @@
-<section id="hero" class="min-h-screen flex items-center justify-center pt-16">
+<section
+  id="hero"
+  class="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden"
+>
+  <div class="hero-glow" aria-hidden="true"></div>
   <div class="max-w-4xl mx-auto px-4 text-center">
-    <p class="text-sm uppercase tracking-widest text-[#3b82f6] mb-4">
+    <p
+      class="hero-in text-sm uppercase tracking-widest text-[#3b82f6] mb-4"
+      style="--hero-delay: 0ms"
+    >
       México · Trabajo remoto
     </p>
 
-    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+    <h1
+      class="hero-rise text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight"
+      style="--hero-delay: 80ms"
+    >
       Soluciones de software para empresas
     </h1>
 
-    <p class="text-lg text-gray-400 max-w-3xl mx-auto mb-10">
+    <p
+      class="hero-in text-lg text-gray-400 max-w-3xl mx-auto mb-10"
+      style="--hero-delay: 160ms"
+    >
       Desarrollamos sistemas administrativos, plataformas GPS, formación en línea y apps móviles, con infraestructura propia y despliegue continuo.
     </p>
 
     <div class="flex justify-center">
       <a
         href="#contacto"
-        class="px-8 py-3 bg-[#3b82f6] text-white font-medium rounded-lg hover:bg-blue-600 transition-colors duration-200"
+        data-magnetic
+        class="hero-in px-8 py-3 bg-[#3b82f6] text-white font-medium rounded-lg hover:bg-blue-600 transition-colors duration-200"
+        style="--hero-delay: 240ms"
       >
         Cuéntanos tu proyecto
       </a>
