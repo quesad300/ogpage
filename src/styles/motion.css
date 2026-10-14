@@ -1,0 +1,93 @@
+/* ============================================================
+   motion.css — Sistema de movimiento (mejora progresiva)
+   Todos los estados "ocultos" viven bajo html[data-motion="on"]:
+   sin JS o con prefers-reduced-motion el sitio queda estático.
+   ============================================================ */
+
+:root {
+  --motion-fast: 200ms;
+  --motion-base: 450ms;
+  --motion-slow: 700ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --motion-stagger: 80ms;
+}
+
+/* Scroll suave: solo cuando el visitante no pide menos movimiento */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Barra de progreso de lectura (fixed: sin CLS) */
+#scroll-progress {
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, #3b82f6, #22d3ee);
+}
+
+/* Navbar con estado al hacer scroll */
+[data-nav] {
+  transition:
+    background-color var(--motion-base) var(--motion-ease),
+    box-shadow var(--motion-base) var(--motion-ease);
+}
+[data-nav][data-scrolled] {
+  background-color: rgba(11, 15, 25, 0.96);
+  box-shadow: 0 10px 24px -16px rgba(0, 0, 0, 0.9);
+}
+
+/* Reveal al hacer scroll — solo bajo el gate de JS */
+html[data-motion="on"] [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity var(--motion-slow) var(--motion-ease)
+      calc(var(--reveal-delay, 0) * var(--motion-stagger)),
+    transform var(--motion-slow) var(--motion-ease)
+      calc(var(--reveal-delay, 0) * var(--motion-stagger));
+}
+html[data-motion="on"] [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Tilt 3D (solo pointer fino por JS; sin JS nada cambia) */
+[data-tilt] {
+  transition:
+    transform var(--motion-base) var(--motion-ease),
+    border-color var(--motion-base) var(--motion-ease),
+    background-color var(--motion-base) var(--motion-ease),
+    color var(--motion-base) var(--motion-ease);
+}
+/* Una vez en pantalla, el reset del tilt no debe heredar el stagger */
+html[data-motion="on"] [data-reveal].is-visible[data-tilt] {
+  transition-delay: 0s !important;
+}
+[data-tilt].is-tilting {
+  transition: none !important;
+}
+
+/* Interruptor general: prefers-reduced-motion anula todo el movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto !important;
+  }
+  html[data-motion="on"] [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .marquee {
+    display: none;
+  }
+  .infra-diagram [class] {
+    animation: none !important;
+  }
+}
