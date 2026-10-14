@@ -6,7 +6,20 @@ import gymscreenshot from '../assets/projects/gymscreenshot.png';
 import moodlescreenshot from '../assets/projects/moodlescreenshot.png';
 import portainerScreenshot from '../assets/projects/portainer.png';
 
-const projects = [
+type Project = {
+  title: string;
+  period: string;
+  description: string;
+  tech: string[];
+  image: ImageMetadata | null;
+  alt: string;
+  pending: string | null;
+  link: string | null;
+  /** URL de video (YouTube o mp4) que se abrirá en grande en lugar de la imagen */
+  video?: string | null;
+};
+
+const projects: Project[] = [
   {
     title: "Plataforma GPS Traccar — Transportes Fraylescanos",
     period: "2019 – actualidad",
@@ -100,14 +113,30 @@ const projects = [
       {projects.map((project) => (
         <article class="bg-[#0b0f19] rounded-lg border border-gray-800 overflow-hidden hover:border-[#3b82f6] transition-colors duration-200 flex flex-col">
           {project.image && (
-            <div class="h-56 overflow-hidden">
+            <button
+              type="button"
+              class="group relative block h-56 w-full overflow-hidden cursor-zoom-in"
+              data-type={project.video ? 'video' : 'image'}
+              data-src={project.video || project.image.src}
+              data-alt={project.alt}
+              data-title={project.title}
+              aria-label={`Ver en grande: ${project.title}`}
+            >
               <Image
                 src={project.image}
                 alt={project.alt}
                 loading="lazy"
-                class="w-full h-full object-contain bg-gray-900 hover:scale-105 transition-transform duration-300"
+                class="w-full h-full object-contain bg-gray-900 group-hover:scale-105 transition-transform duration-300"
               />
-            </div>
+              {project.video && (
+                <span class="absolute inset-0 grid place-items-center" aria-hidden="true">
+                  <span class="rounded-full bg-black/70 border border-white/30 p-4 text-white text-xl leading-none">&#9654;</span>
+                </span>
+              )}
+              <span class="absolute inset-0 grid place-items-center bg-black/50 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-200" aria-hidden="true">
+                <span class="text-white text-sm font-medium">Ver en grande</span>
+              </span>
+            </button>
           )}
 
           <div class="p-6 flex flex-col flex-1">
@@ -147,6 +176,106 @@ const projects = [
           </div>
         </article>
       ))}
+      </div>
     </div>
   </div>
+
+  <!-- Lightbox: vista en grande de imágenes/videos de proyectos -->
+  <div
+    id="media-modal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Vista ampliada de proyecto"
+  >
+    <button
+      type="button"
+      id="media-modal-close"
+      class="absolute top-4 right-4 z-10 grid h-11 w-11 place-items-center rounded-full bg-black/60 border border-gray-600 text-gray-200 text-lg hover:border-blue-500 hover:text-white transition-colors"
+      aria-label="Cerrar vista ampliada"
+    >
+      &#10005;
+    </button>
+    <figure class="flex max-h-full max-w-full flex-col items-center">
+      <img id="media-modal-img" class="hidden max-h-[82vh] max-w-[92vw] rounded-lg object-contain" alt="" />
+      <video id="media-modal-video" class="hidden max-h-[82vh] max-w-[92vw] rounded-lg" controls playsinline></video>
+      <iframe
+        id="media-modal-frame"
+        class="hidden aspect-video w-[min(92vw,960px)] rounded-lg border-0"
+        title="Video del proyecto"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      <figcaption id="media-modal-caption" class="mt-3 max-w-2xl text-center text-sm text-gray-300"></figcaption>
+    </figure>
+  </div>
 </section>
+
+<script>
+  const modal = document.getElementById('media-modal');
+  const modalImg = document.getElementById('media-modal-img') as HTMLImageElement;
+  const modalVideo = document.getElementById('media-modal-video') as HTMLVideoElement;
+  const modalFrame = document.getElementById('media-modal-frame') as HTMLIFrameElement;
+  const modalCaption = document.getElementById('media-modal-caption');
+  const closeBtn = document.getElementById('media-modal-close');
+  let lastFocused: HTMLElement | null = null;
+
+  function toYouTubeEmbed(url: string): string | null {
+    const m = url.match(/(?:youtu\.be\/|[?&]v=|shorts\/|embed\/)([\w-]{11})/);
+    return m ? `https://www.youtube-nocookie.com/embed/${m[1]}?autoplay=1&rel=0` : null;
+  }
+
+  function hideAll() {
+    modalImg.classList.add('hidden');
+    modalVideo.classList.add('hidden');
+    modalFrame.classList.add('hidden');
+    modalVideo.pause();
+    modalFrame.src = '';
+  }
+
+  function open(type: string, src: string, alt: string, title: string) {
+    hideAll();
+    modalCaption.textContent = title;
+    if (type === 'video') {
+      const yt = toYouTubeEmbed(src);
+      if (yt) {
+        modalFrame.src = yt;
+        modalFrame.classList.remove('hidden');
+      } else {
+        modalVideo.src = src;
+        modalVideo.classList.remove('hidden');
+        modalVideo.play().catch(() => {});
+      }
+    } else {
+      modalImg.src = src;
+      modalImg.alt = alt;
+      modalImg.classList.remove('hidden');
+    }
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function close() {
+    hideAll();
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = '';
+    lastFocused?.focus();
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('button[data-src][data-type]').forEach((btn) => {
+    if (!btn.dataset.type || !btn.dataset.src) return;
+    btn.addEventListener('click', () => {
+      lastFocused = btn;
+      open(btn.dataset.type, btn.dataset.src, btn.dataset.alt ?? '', btn.dataset.title ?? '');
+    });
+  });
+
+  closeBtn?.addEventListener('click', close);
+  modal?.addEventListener('click', (e) => { if (e.target === modal) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) close();
+  });
+</script>
