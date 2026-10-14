@@ -1,5 +1,6 @@
 services:
   ogpage:
+    build: .
     image: ghcr.io/quesad300/ogpage:v1
     container_name: ogpage
     restart: unless-stopped

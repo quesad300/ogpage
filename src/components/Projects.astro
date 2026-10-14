@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import screenshotconfianza from '../assets/projects/screenshotconfianza.png';
 import traccarscreenshot from '../assets/projects/traccarscreenshot.png';
 import gymscreenshot from '../assets/projects/gymscreenshot.png';
@@ -99,9 +100,10 @@ const projects = [
         <article class="bg-[#0b0f19] rounded-lg border border-gray-800 overflow-hidden hover:border-[#3b82f6] transition-colors duration-200 flex flex-col">
           {project.image && (
             <div class="h-56 overflow-hidden">
-              <img
-                src={project.image.src}
+              <Image
+                src={project.image}
                 alt={project.alt}
+                loading="lazy"
                 class="w-full h-full object-contain bg-gray-900 hover:scale-105 transition-transform duration-300"
               />
             </div>
