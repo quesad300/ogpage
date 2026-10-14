@@ -1,4 +1,6 @@
 ---
+import InfraDiagram from "./InfraDiagram.astro";
+
 const figures = [
   { value: "3", label: "VPS en producción" },
   { value: "17", label: "Stacks desplegados" },
@@ -16,7 +18,17 @@ const figures = [
       Aplicaciones Laravel, Moodle y otros sistemas corriendo en nuestro propio clúster.
     </p>
 
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+    <div
+      class="overflow-x-auto"
+      role="region"
+      aria-label="Diagrama de infraestructura. Desliza horizontalmente para verlo completo."
+      tabindex="0"
+      data-diagram-parallax
+    >
+      <InfraDiagram />
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
       {figures.map((figure, i) => (
         <div
           data-reveal
@@ -24,7 +36,7 @@ const figures = [
           style={`--reveal-delay:${i}`}
           class="bg-[#111827] p-6 rounded-lg border border-gray-800 text-center hover:border-[#3b82f6] transition-colors duration-200"
         >
-          <p class="text-4xl font-bold text-white mb-2">{figure.value}</p>
+          <p data-count class="text-4xl font-bold text-white mb-2">{figure.value}</p>
           <p class="text-sm text-gray-400">{figure.label}</p>
         </div>
       ))}
