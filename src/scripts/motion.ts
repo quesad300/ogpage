@@ -97,6 +97,67 @@ if (!reduce.matches) {
             apply();
           });
         });
+
+      // 5b) Tilt 3D de tarjetas: rotateX/rotateY ≤6°, rAF-throttled.
+      //     Sin clics interceptados (solo transform). En táctil no
+      //     se inicializa (pointer:fine) y reduce ya bloqueó todo.
+      const TILT_MAX = 6; // grados
+      document.querySelectorAll<HTMLElement>("[data-tilt]").forEach((card) => {
+        let queuedT = false;
+        let rx = 0;
+        let ry = 0;
+        const applyTilt = () => {
+          queuedT = false;
+          card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+        };
+        card.addEventListener("pointermove", (e) => {
+          if (reduce.matches) return;
+          const r = card.getBoundingClientRect();
+          const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
+          const ny = ((e.clientY - r.top) / r.height) * 2 - 1;
+          ry = +(nx * TILT_MAX).toFixed(2);
+          rx = +(-ny * TILT_MAX).toFixed(2);
+          card.classList.add("is-tilting");
+          if (queuedT) return;
+          queuedT = true;
+          requestAnimationFrame(applyTilt);
+        });
+        card.addEventListener("pointerleave", () => {
+          card.classList.remove("is-tilting");
+          card.style.transform = "";
+        });
+      });
+
+      // 5c) CTAs magnéticos: sigue al puntero con ≤0.3× del offset,
+      //     clamp a 6px; vuelve con "spring" al salir.
+      const MAG_CLAMP = 6; // px
+      document
+        .querySelectorAll<HTMLElement>("[data-magnetic]")
+        .forEach((el) => {
+          let queuedM = false;
+          let tx = 0;
+          let ty = 0;
+          const applyMag = () => {
+            queuedM = false;
+            el.style.transform = tx || ty ? `translate(${tx}px, ${ty}px)` : "";
+          };
+          el.addEventListener("pointermove", (e) => {
+            if (reduce.matches) return;
+            const r = el.getBoundingClientRect();
+            const dx = e.clientX - (r.left + r.width / 2);
+            const dy = e.clientY - (r.top + r.height / 2);
+            tx = Math.max(-MAG_CLAMP, Math.min(MAG_CLAMP, dx * 0.3));
+            ty = Math.max(-MAG_CLAMP, Math.min(MAG_CLAMP, dy * 0.3));
+            if (queuedM) return;
+            queuedM = true;
+            requestAnimationFrame(applyMag);
+          });
+          el.addEventListener("pointerleave", () => {
+            tx = 0;
+            ty = 0;
+            applyMag();
+          });
+        });
     }
 
     // 6) Kill-switch en caliente: si activan reduce, todo vuelve a estático.
@@ -105,6 +166,12 @@ if (!reduce.matches) {
       root.removeAttribute("data-motion");
       io.disconnect();
       if (progress) progress.style.transform = "";
+      document
+        .querySelectorAll<HTMLElement>("[data-tilt],[data-magnetic]")
+        .forEach((el) => {
+          el.style.transform = "";
+          el.classList.remove("is-tilting");
+        });
     });
   }
 
