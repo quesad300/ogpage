@@ -53,6 +53,11 @@ const groups = [
     techs: ["Moodle", "WordPress", "Traccar"],
   },
 ];
+
+// Chips decorativos del marquee: las mismas cadenas que las listas
+// agrupadas de abajo (el marquee es aria-hidden; las listas siguen
+// siendo la fuente única para lectores de pantalla y SEO).
+const chips = groups.flatMap((group) => group.techs);
 ---
 
 <section id="tecnologias" class="py-20 bg-[#0b0f19]">
@@ -60,10 +65,28 @@ const groups = [
     <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-4">
       Tecnologías que dominamos
     </h2>
-    <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+    <p class="text-gray-400 text-center mb-10 max-w-2xl mx-auto">
       Habilidades agrupadas por área
     </p>
+  </div>
 
+  <div class="marquee" aria-hidden="true" data-reveal style="--reveal-delay: 1">
+    <div class="marquee-track">
+      {[0, 1].map(() => (
+        <div class="marquee-group">
+          {chips.map((chip) => (
+            <span
+              class="shrink-0 whitespace-nowrap px-4 py-2 bg-[#111827] border border-gray-700 rounded-lg text-gray-300"
+            >
+              {chip}
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="max-w-4xl mx-auto px-4 mt-12">
     <div class="space-y-8">
       {groups.map((group) => (
         <div>
