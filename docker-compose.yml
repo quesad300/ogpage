@@ -1,24 +1,8 @@
-networks:
-  traefik_public:
-    external: true
-
-  general_network:
-    external: true
-
 services:
-  web:
-    build: .
+  ogpage:
+    image: ghcr.io/quesad300/ogpage:v1
     container_name: ogpage
-    ports:
-      - "4321:4321"
     restart: unless-stopped
-    environment:
-      - NODE_ENV=production
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:4321"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
     networks:
       - general_network
       - traefik_public
@@ -29,5 +13,17 @@ services:
       - "traefik.http.routers.ogpage.priority=1"
       - "traefik.http.routers.ogpage.tls=true"
       - "traefik.http.routers.ogpage.tls.certresolver=le"
-      - "traefik.http.routers.ogpage.service=web"
+      - "traefik.http.routers.ogpage.service=ogpage"
       - "traefik.http.services.ogpage.loadbalancer.server.port=80"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'    # máximo 1 CPU
+          memory: 512M
+
+networks:
+  general_network:
+    external: true
+    attachable: true
+  traefik_public:
+    external: true

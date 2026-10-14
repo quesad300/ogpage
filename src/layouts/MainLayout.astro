@@ -10,7 +10,7 @@ interface Props {
 const { 
   title, 
   description = "Desarrollo sistemas web, dashboards administrativos, APIs e integraciones. Especializado en Laravel, React y soluciones a medida.",
-  image = "/og-image.png"
+  image = "/logoogdevsecops.png"
 } = Astro.props;
 
 const site = Astro.site || new URL('https://oswaldoguerrero.dev');
@@ -27,7 +27,7 @@ const canonicalURL = new URL(Astro.url.pathname, site);
     <meta name="robots" content="index, follow" />
     
     <link rel="canonical" href={canonicalURL.href} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/logoogdevsecops.png" />
     
     <title>{title}</title>
     
