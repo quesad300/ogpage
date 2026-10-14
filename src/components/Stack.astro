@@ -1,8 +1,58 @@
 ---
-const backend = ["Laravel", "PHP", "MySQL"];
-const frontend = ["React", "Next.js", "JavaScript", "Tailwind"];
-const mobile = ["Flutter", "React Native", "Ionic"];
-const other = ["Docker", "Moodle", "Traccar", "Linux", "Git"];
+const groups = [
+  {
+    name: "Backend",
+    techs: [
+      "Laravel",
+      "PHP",
+      "MySQL",
+      "MariaDB",
+      "APIs REST",
+      "Lumen",
+      "Java (Traccar)",
+      "TypeScript",
+      "Firebase Functions",
+      "Python (básico)",
+      "Spatie",
+    ],
+  },
+  {
+    name: "Frontend",
+    techs: [
+      "JavaScript",
+      "Ext JS (Traccar)",
+      "React",
+      "HTML",
+      "CSS",
+      "Tailwind",
+      "Bootstrap",
+    ],
+  },
+  {
+    name: "Móvil",
+    techs: ["Flutter", "React Native", "Ionic"],
+  },
+  {
+    name: "Infraestructura",
+    techs: [
+      "Docker",
+      "Docker Swarm",
+      "K3s",
+      "Nginx",
+      "Redis",
+      "Linux",
+      "Git",
+      "GitHub Actions",
+      "Grafana",
+      "Prometheus",
+      "respaldos en la nube",
+    ],
+  },
+  {
+    name: "Plataformas",
+    techs: ["Moodle", "WordPress", "Traccar"],
+  },
+];
 ---
 
 <section id="stack" class="py-20 bg-[#111827]">
@@ -11,53 +61,22 @@ const other = ["Docker", "Moodle", "Traccar", "Linux", "Git"];
       Stack Tecnológico
     </h2>
     <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-      Tecnologías con las que trabajo diariamente
+      Habilidades agrupadas por área
     </p>
-    
-    <div class="space-y-8">
-      <div>
-        <h3 class="text-lg font-medium text-gray-300 mb-4">Backend</h3>
-        <div class="flex flex-wrap gap-3">
-          {backend.map((tech) => (
-            <span class="px-4 py-2 bg-[#0b0f19] border border-gray-700 rounded-lg text-gray-300 hover:border-[#3b82f6] hover:text-[#3b82f6] transition-colors duration-200">
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
-      
-      <div>
-        <h3 class="text-lg font-medium text-gray-300 mb-4">Frontend</h3>
-        <div class="flex flex-wrap gap-3">
-          {frontend.map((tech) => (
-            <span class="px-4 py-2 bg-[#0b0f19] border border-gray-700 rounded-lg text-gray-300 hover:border-[#3b82f6] hover:text-[#3b82f6] transition-colors duration-200">
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
 
-      <div>
-        <h3 class="text-lg font-medium text-gray-300 mb-4">Móvil</h3>
-        <div class="flex flex-wrap gap-3">
-          {mobile.map((tech) => (
-            <span class="px-4 py-2 bg-[#0b0f19] border border-gray-700 rounded-lg text-gray-300 hover:border-[#3b82f6] hover:text-[#3b82f6] transition-colors duration-200">
-              {tech}
-            </span>
-          ))}
+    <div class="space-y-8">
+      {groups.map((group) => (
+        <div>
+          <h3 class="text-lg font-medium text-gray-300 mb-4">{group.name}</h3>
+          <div class="flex flex-wrap gap-3">
+            {group.techs.map((tech) => (
+              <span class="px-4 py-2 bg-[#0b0f19] border border-gray-700 rounded-lg text-gray-300 hover:border-[#3b82f6] hover:text-[#3b82f6] transition-colors duration-200">
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
-      
-      <div>
-        <h3 class="text-lg font-medium text-gray-300 mb-4">Otros</h3>
-        <div class="flex flex-wrap gap-3">
-          {other.map((tech) => (
-            <span class="px-4 py-2 bg-[#0b0f19] border border-gray-700 rounded-lg text-gray-300 hover:border-[#3b82f6] hover:text-[#3b82f6] transition-colors duration-200">
-              {tech}
-            </span>
-          ))}
-        </div>
-      </div>
+      ))}
     </div>
   </div>
 </section>

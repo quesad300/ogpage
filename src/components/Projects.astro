@@ -1,44 +1,85 @@
 ---
 import screenshotconfianza from '../assets/projects/screenshotconfianza.png';
 import traccarscreenshot from '../assets/projects/traccarscreenshot.png';
-import screenshottransportesfraylescanos from '../assets/projects/screenshottransportesfraylescanos.png';
 import gymscreenshot from '../assets/projects/gymscreenshot.png';
 import moodlescreenshot from '../assets/projects/moodlescreenshot.png';
 
 const projects = [
   {
-    title: "Sistema Confianza - Ventas de Lotes",
-    description: "Sistema financiero inmobiliario para ventas a cuotas de terrenos loteados. Dashboard administrativo con gestión de clientes, contratos, pagos y reportes.",
-    tech: ["Laravel", "MySQL", "Spatie", "Livewire"],
-    image: screenshotconfianza,
-    link: null,
-  },
-  {
-    title: "Implementación Traccar GPS",
-    description: "Servidor GPS propio con Traccar personalizado. Interfaz custom para tracking de flota vehicular en tiempo real con notificaciones y reportes.",
-    tech: ["Traccar", "Docker", "Custom UI", "Linux"],
+    title: "Plataforma GPS Traccar — Transportes Fraylescanos",
+    period: "2019 – actualidad",
+    description:
+      "Instalación y operación de plataforma GPS con Traccar: personalización de backend (Java) e interfaz (JavaScript), actualizaciones y respaldos.",
+    tech: ["Traccar", "Java", "JavaScript", "Linux"],
     image: traccarscreenshot,
+    alt: "Captura de la plataforma GPS Traccar de Transportes Fraylescanos",
+    pending: "[PENDIENTE: unidades rastreadas]",
     link: null,
   },
   {
-    title: "Plataforma Moodle + App Móvil",
-    description: "Plataforma educativa LMS completa con tema personalizado, módulos custom y aplicación móvil híbrida.",
-    tech: ["Moodle", "Ionic"],
+    title: "Sistema financiero inmobiliario — Confianza Tu Agente Inmobiliario",
+    period: "ago. 2024 – nov. 2024",
+    description:
+      "Venta de lotes a cuotas: cartas compromiso, enganches y mensualidades, reportes auditables y paneles por rol con Spatie.",
+    tech: ["Laravel", "MySQL", "Spatie"],
+    image: screenshotconfianza,
+    alt: "Captura del sistema financiero inmobiliario de Confianza Tu Agente Inmobiliario",
+    pending: null,
+    link: null,
+  },
+  {
+    title: "Plataforma educativa Moodle y app móvil — Lidermel",
+    period: "ago. 2021 – sep. 2025",
+    description:
+      "Temas personalizados para Moodle 5 en web y app móvil con Ionic, WordPress y pruebas con Docker (proyecto remoto).",
+    tech: ["Moodle", "Ionic", "WordPress", "Docker"],
     image: moodlescreenshot,
+    alt: "Captura de la plataforma educativa Moodle de Lidermel",
+    pending: null,
     link: null,
   },
   {
-    title: "Landing Fraylescanos - Transporte",
-    description: "Sitio web corporativo responsivo para empresa de transporte de carga. Optimización de performance, SEO y accesibilidad.",
-    tech: ["Astro", "Tailwind", "Performance"],
-    image: screenshottransportesfraylescanos,
+    title: "Ecosistema de 4 apps de delivery — Alcoholcity",
+    period: "jun. 2020 – ago. 2022",
+    description:
+      "Cuatro apps de delivery con Flutter y Firebase Functions, pagos con Mercado Pago y rutas con Google Maps (proyecto remoto).",
+    tech: ["Flutter", "Firebase Functions", "Mercado Pago", "Google Maps"],
+    image: null,
+    alt: "",
+    pending: "[PENDIENTE: captura o enlace público]",
+    link: null,
+  },
+  {
+    title: "ERP y CRM en Laravel y apps móviles — s21sistem",
+    period: "dic. 2025 – abr. 2026",
+    description:
+      "Sistema con procesos para creación de cajas y publicación de 3 apps en App Store y Play Store con React Native.",
+    tech: ["Laravel", "ERP", "CRM", "React Native"],
+    image: null,
+    alt: "",
+    pending: "[PENDIENTE: captura o enlace público]",
+    link: null,
+  },
+  {
+    title: "Infraestructura Docker Swarm en producción",
+    period: "[PENDIENTE: fecha de inicio]",
+    description:
+      "Clúster Docker Swarm para aplicaciones Laravel, Moodle y otros sistemas, con despliegue continuo (GitHub Actions, GHCR, Portainer), monitoreo (Grafana, Prometheus), certificados SSL y dominios.",
+    tech: ["Docker Swarm", "GitHub Actions", "GHCR", "Portainer", "Grafana", "Prometheus"],
+    image: null,
+    alt: "",
+    pending: "[PENDIENTE: fecha de inicio, número de aplicaciones y nodos]",
     link: null,
   },
   {
     title: "Guerreros Gym",
-    description: "Sitio web para gimnasio con información de servicios, horarios, planes y contacto. Diseño moderno y responsivo.",
-    tech: ["Astro", "Tailwind", "Performance"],
+    period: "Sitio web en producción",
+    description:
+      "Sitio web para gimnasio con información de servicios, horarios, planes y contacto. Diseño moderno y responsivo.",
+    tech: ["Astro", "Tailwind"],
     image: gymscreenshot,
+    alt: "Captura del sitio web de Guerreros Gym",
+    pending: null,
     link: "https://guerrerosgym.sytes.net/",
   },
 ];
@@ -50,41 +91,58 @@ const projects = [
       Proyectos
     </h2>
     <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-      Trabajos realizados con tecnologías modernas
+      Proyectos destacados con datos oficiales
     </p>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       {projects.map((project) => (
-        <a 
-          href={project.link || "#"}
-          target={project.link ? "_blank" : "_self"}
-          rel={project.link ? "noopener noreferrer" : ""}
-          class={`bg-[#0b0f19] rounded-lg border border-gray-800 overflow-hidden hover:border-[#3b82f6] transition-colors duration-200 ${project.link ? 'cursor-pointer' : 'pointer-events-none'}`}
-        >
-          <div class="h-56 overflow-hidden">
-            <img 
-              src={project.image.src} 
-              alt={project.title}
-              class={`w-full h-full object-contain bg-gray-900 hover:scale-105 transition-transform duration-300`}
-            />
-          </div>
-          
-          <div class="p-6">
+        <article class="bg-[#0b0f19] rounded-lg border border-gray-800 overflow-hidden hover:border-[#3b82f6] transition-colors duration-200 flex flex-col">
+          {project.image && (
+            <div class="h-56 overflow-hidden">
+              <img
+                src={project.image.src}
+                alt={project.alt}
+                class="w-full h-full object-contain bg-gray-900 hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          )}
+
+          <div class="p-6 flex flex-col flex-1">
+            <span class="text-sm text-[#3b82f6] font-medium mb-2">
+              {project.period}
+            </span>
             <h3 class="text-xl font-semibold text-white mb-3">
               {project.title}
             </h3>
             <p class="text-gray-400 mb-4">
               {project.description}
             </p>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2 mb-4">
               {project.tech.map((t) => (
                 <span class="px-3 py-1 text-sm bg-[#3b82f6]/10 text-[#3b82f6] rounded-full border border-[#3b82f6]/20">
                   {t}
                 </span>
               ))}
             </div>
+
+            {project.pending && (
+              <p class="text-sm text-amber-400 mb-4">{project.pending}</p>
+            )}
+
+            <div class="mt-auto">
+              {project.link && (
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-block px-5 py-2 border border-gray-600 text-gray-300 text-sm font-medium rounded-lg hover:border-[#3b82f6] hover:text-[#3b82f6] transition-colors duration-200"
+                >
+                  Ver proyecto
+                </a>
+              )}
+            </div>
           </div>
-        </a>
+        </article>
       ))}
     </div>
   </div>
