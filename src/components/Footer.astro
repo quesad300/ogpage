@@ -1,50 +1,20 @@
 ---
-const year = new Date().getFullYear();
-
-const WHATSAPP_NUMBER = "529651352357";
-const WHATSAPP_MESSAGE =
-  "Hola José, vi tu sitio OGDevSecOps (ogdevsecops.sytes.net) y me gustaría hablar sobre un proyecto.";
-
-const links = [
-  {
-    label: "Email",
-    href: "mailto:joseoswaldogperez@gmail.com",
-  },
-  {
-    label: "WhatsApp",
-    href: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`,
-  },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/jos%C3%A9-oswaldo-guerrero-p%C3%A9rez-2843791aa/",
-  },
-  {
-    label: "GitHub",
-    href: "https://github.com/quesad300",
-  },
-  {
-    label: "YouTube",
-    href: "https://www.youtube.com/@OGDevSecOps",
-  },
-];
+const LINKEDIN_COMPANY = "https://www.linkedin.com/company/ogdevsecops";
 ---
 
 <footer class="py-8 bg-[#111827] border-t border-gray-800">
   <div class="max-w-6xl mx-auto px-4 text-center">
-    <nav aria-label="Enlaces del pie de página" class="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-4">
-      {links.map((link) => (
-        <a
-          href={link.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-gray-400 text-sm hover:text-[#3b82f6] transition-colors duration-200"
-        >
-          {link.label}
-        </a>
-      ))}
-    </nav>
-    <p class="text-gray-500 text-sm">
-      &copy; {year} OGDevSecOps — José Oswaldo Guerrero Pérez. Desarrollador Backend y DevOps.
+    <p class="text-gray-400 text-sm mb-2">
+      OGDevSecOps — Soluciones de software para empresas.
     </p>
+    <p class="text-gray-500 text-sm mb-4">© 2026 OGDevSecOps · México</p>
+    <a
+      href={LINKEDIN_COMPANY}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-gray-400 text-sm hover:text-[#3b82f6] transition-colors duration-200"
+    >
+      LinkedIn
+    </a>
   </div>
 </footer>

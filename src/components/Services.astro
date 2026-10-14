@@ -1,46 +1,61 @@
 ---
 const services = [
   {
-    title: "Sistemas administrativos, ERP y CRM a medida",
+    title: "Sistemas administrativos, ERP y CRM",
     description:
-      "Sistemas a medida con roles y permisos: Laravel, MySQL y paquete Spatie para ERP y CRM adaptados a tu operación.",
+      "Gestión de finanzas, inventarios, clientes y reportes hecha a la medida de tu operación.",
   },
   {
-    title: "APIs REST",
+    title: "Desarrollo web a medida e integraciones",
     description:
-      "Diseño y desarrollo de APIs REST con autenticación, validación y documentación, listas para integrarse con web y apps móviles.",
+      "Portales, sistemas internos e integraciones que conectan tus aplicaciones y eliminan tareas repetitivas.",
   },
   {
-    title: "Plataformas GPS con Traccar",
+    title: "Plataformas de rastreo GPS",
     description:
-      "Instalación, personalización en Java y JavaScript, actualizaciones y respaldos de servidores GPS Traccar.",
+      "Control de flotas y activos en tiempo real con alertas, reportes e históricos.",
   },
   {
-    title: "Moodle: temas y app móvil",
+    title: "Formación en línea corporativa",
     description:
-      "Temas personalizados para Moodle 5 en web y app móvil con Ionic, además de integraciones con WordPress.",
+      "Cursos, seguimiento de avances y certificación para la capacitación de tu equipo.",
   },
   {
-    title: "Apps móviles con Flutter y React Native",
-    description:
-      "Desarrollo de apps móviles multiplataforma con Flutter y React Native, publicadas en App Store y Play Store.",
+    title: "Aplicaciones móviles",
+    description: "Apps para clientes y operación interna en iOS y Android.",
   },
   {
-    title: "Infraestructura y despliegue",
+    title: "Infraestructura y despliegue continuo",
     description:
-      "Docker Swarm, GitHub Actions, GHCR y Portainer con monitoreo mediante Grafana y Prometheus.",
+      "Servidores, redes y publicación automática para que tu sistema esté siempre disponible.",
+  },
+];
+
+const process = [
+  {
+    title: "Descubrimiento",
+    description: "Entendemos tu proceso y definimos el alcance contigo.",
+  },
+  {
+    title: "Propuesta y plan",
+    description: "Alcance, tiempos y costos claros antes de empezar.",
+  },
+  {
+    title: "Desarrollo",
+    description: "Entregas por etapas con avances visibles.",
+  },
+  {
+    title: "Despliegue y soporte",
+    description: "Puesta en marcha, capacitación y mantenimiento continuo.",
   },
 ];
 ---
 
 <section id="servicios" class="py-20 bg-[#0b0f19]">
   <div class="max-w-6xl mx-auto px-4">
-    <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-4">
-      Áreas de especialidad
+    <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-12">
+      Soluciones
     </h2>
-    <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-      Seis áreas en las que trabajo día a día
-    </p>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {services.map((service) => (
@@ -53,6 +68,25 @@ const services = [
           </p>
         </div>
       ))}
+    </div>
+
+    <div class="mt-20">
+      <h3 class="text-2xl sm:text-3xl font-bold text-center text-white mb-10">
+        Cómo trabajamos
+      </h3>
+
+      <ol class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {process.map((step) => (
+          <li class="bg-[#111827] p-6 rounded-lg border border-gray-800">
+            <p class="text-sm font-semibold text-[#3b82f6] uppercase tracking-widest mb-3">
+              {step.title}
+            </p>
+            <p class="text-gray-400 text-sm">
+              {step.description}
+            </p>
+          </li>
+        ))}
+      </ol>
     </div>
   </div>
 </section>

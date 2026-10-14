@@ -1,0 +1,84 @@
+---
+type Caso = {
+  sector: string;
+  reto: string;
+  solucion: string;
+  resultado: string;
+};
+
+const casos: Caso[] = [
+  {
+    sector: "Transporte y logística",
+    reto: "Seguir en tiempo real una flota repartida en varias rutas.",
+    solucion:
+      "Plataforma de rastreo GPS instalada y personalizada, con actualizaciones y respaldos periódicos.",
+    resultado: "Más de 100 unidades GPS monitoreadas en operación.",
+  },
+  {
+    sector: "Inmobiliaria",
+    reto: "Vender lotes a cuotas sin control centralizado de pagos ni trazabilidad por cliente.",
+    solucion:
+      "Sistema financiero con cartas compromiso, enganches, mensualidades, reportes auditables y paneles por rol.",
+    resultado:
+      "Reportes financieros auditables y control de acceso por rol sobre un solo sistema.",
+  },
+  {
+    sector: "Educación y formación",
+    reto: "Llevar los cursos más allá del navegador y darles acceso desde el móvil.",
+    solucion:
+      "Plataforma de formación en línea con personalización de interfaz y aplicación móvil complementaria.",
+    resultado: "Contenido disponible en web y en app móvil para los alumnos.",
+  },
+];
+---
+
+<section id="casos" class="py-20 bg-[#111827]">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-12">
+      Casos de éxito
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {casos.map((caso) => (
+        <article class="bg-[#0b0f19] p-6 rounded-lg border border-gray-800 hover:border-[#3b82f6] transition-colors duration-200">
+          <svg
+            class="w-8 h-8 text-[#3b82f6] mb-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+
+          <p class="text-xs font-semibold uppercase tracking-widest text-[#3b82f6] mb-1">
+            Sector
+          </p>
+          <h3 class="text-lg font-semibold text-white mb-4">
+            {caso.sector}
+          </h3>
+
+          <dl class="space-y-3">
+            <div>
+              <dt class="text-sm font-semibold text-gray-300">Reto</dt>
+              <dd class="text-sm text-gray-400">{caso.reto}</dd>
+            </div>
+            <div>
+              <dt class="text-sm font-semibold text-gray-300">Solución</dt>
+              <dd class="text-sm text-gray-400">{caso.solucion}</dd>
+            </div>
+            <div>
+              <dt class="text-sm font-semibold text-gray-300">Resultado</dt>
+              <dd class="text-sm text-gray-400">{caso.resultado}</dd>
+            </div>
+          </dl>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

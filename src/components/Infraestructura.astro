@@ -1,0 +1,28 @@
+---
+const figures = [
+  { value: "3", label: "VPS en producción" },
+  { value: "17", label: "Stacks desplegados" },
+  { value: "26", label: "Servicios activos" },
+  { value: "35", label: "Contenedores en ejecución" },
+];
+---
+
+<section id="infraestructura" class="py-20 bg-[#0b0f19]">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-4">
+      Infraestructura en operación
+    </h2>
+    <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+      Aplicaciones Laravel, Moodle y otros sistemas corriendo en nuestro propio clúster.
+    </p>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+      {figures.map((figure) => (
+        <div class="bg-[#111827] p-6 rounded-lg border border-gray-800 text-center hover:border-[#3b82f6] transition-colors duration-200">
+          <p class="text-4xl font-bold text-white mb-2">{figure.value}</p>
+          <p class="text-sm text-gray-400">{figure.label}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
