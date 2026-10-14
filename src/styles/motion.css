@@ -87,11 +87,14 @@ html[data-motion="on"] #hero .hero-rise {
   animation: hero-rise var(--motion-slow) var(--motion-ease)
     var(--hero-delay, 0ms) backwards;
 }
-/* Glow decorativo del hero (por defecto estático e invisible sin gate) */
+/* Glow decorativo del hero: invisible por defecto (sin JS no cambia
+   el sitio); bajo el gate aparece con su propio fundido (fill both
+   para conservar el estado final tras la animación). */
 .hero-glow {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  opacity: 0;
   background: radial-gradient(
     600px 320px at 50% 32%,
     rgba(59, 130, 246, 0.14),
@@ -99,7 +102,7 @@ html[data-motion="on"] #hero .hero-rise {
   );
 }
 html[data-motion="on"] #hero .hero-glow {
-  animation: hero-fade-rise 1.2s var(--motion-ease) backwards;
+  animation: hero-fade-rise 1.2s var(--motion-ease) both;
 }
 
 /* ============================================================
