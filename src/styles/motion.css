@@ -52,6 +52,97 @@ html[data-motion="on"] [data-reveal].is-visible {
   transform: none;
 }
 
+/* ============================================================
+   Entrada del hero (coreografía CSS; solo bajo el gate).
+   - h1 SOLO transform (sin opacity): LCP pintado en el primer
+     fotograma, sin esperar a JS.
+   - fill-mode backwards: el estado final es el estilo por
+     defecto; al terminar la animación suelta el control del
+     transform (necesario para data-magnetic del CTA).
+   - delays ≤ 240ms (AC: ≤500ms).
+   ============================================================ */
+@keyframes hero-fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes hero-rise {
+  from {
+    transform: translateY(18px);
+  }
+  to {
+    transform: none;
+  }
+}
+html[data-motion="on"] #hero .hero-in {
+  animation: hero-fade-rise var(--motion-slow) var(--motion-ease)
+    var(--hero-delay, 0ms) backwards;
+}
+html[data-motion="on"] #hero .hero-rise {
+  animation: hero-rise var(--motion-slow) var(--motion-ease)
+    var(--hero-delay, 0ms) backwards;
+}
+/* Glow decorativo del hero (por defecto estático e invisible sin gate) */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    600px 320px at 50% 32%,
+    rgba(59, 130, 246, 0.14),
+    transparent 70%
+  );
+}
+html[data-motion="on"] #hero .hero-glow {
+  animation: hero-fade-rise 1.2s var(--motion-ease) backwards;
+}
+
+/* ============================================================
+   Marquee de tecnologías (Stack.astro; decorativo, aria-hidden
+   en el markup). Altura fija ⇒ sin CLS. Sin JS queda estático
+   (play-state paused por defecto); reduce ⇒ display:none.
+   ============================================================ */
+.marquee {
+  height: 3.5rem;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 42s linear infinite;
+  animation-play-state: paused;
+}
+html[data-motion="on"] .marquee-track {
+  animation-play-state: running;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-group {
+  display: flex;
+  gap: 0.75rem;
+  padding-right: 0.75rem;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 /* Tilt 3D (solo pointer fino por JS; sin JS nada cambia) */
 [data-tilt] {
   transition:
@@ -66,6 +157,55 @@ html[data-motion="on"] [data-reveal].is-visible[data-tilt] {
 }
 [data-tilt].is-tilting {
   transition: none !important;
+}
+
+/* CTAs magnéticos (JS solo en pointer:fine): transición suave para
+   seguir al puntero y "spring" de vuelta al salir. Sin JS no hay
+   transform inline ⇒ nada cambia. */
+html[data-motion="on"] [data-magnetic] {
+  transition: transform var(--motion-base) var(--motion-ease);
+  will-change: transform;
+}
+
+/* ============================================================
+   Micro-motion del formulario de contacto (100% CSS, sin JS):
+   anillo de foco pulsado + brillo que cruza el botón al hover.
+   Todo bajo el gate: sin JS el formulario queda exactamente igual.
+   ============================================================ */
+html[data-motion="on"] #contacto input:focus-visible,
+html[data-motion="on"] #contacto textarea:focus-visible {
+  animation: focus-ring 400ms var(--motion-ease);
+}
+@keyframes focus-ring {
+  from {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.45);
+  }
+  to {
+    box-shadow: 0 0 0 6px rgba(59, 130, 246, 0);
+  }
+}
+html[data-motion="on"] #contacto button[type="submit"] {
+  position: relative;
+  overflow: hidden;
+}
+html[data-motion="on"] #contacto button[type="submit"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  transition: transform 600ms var(--motion-ease);
+}
+html[data-motion="on"]
+  #contacto
+  button[type="submit"]:hover::after {
+  transform: translateX(100%);
 }
 
 /* ============================================================
