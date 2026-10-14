@@ -68,6 +68,87 @@ html[data-motion="on"] [data-reveal].is-visible[data-tilt] {
   transition: none !important;
 }
 
+/* ============================================================
+   Diagrama de infraestructura (InfraDiagram.astro)
+   Pulsos 100% CSS: pathLength="1" + stroke-dasharray + delays
+   negativos. Sin JS no se activan (gate); con reduce los anula
+   el interruptor general de este archivo.
+   ============================================================ */
+.infra-diagram .link-base {
+  fill: none;
+  stroke: #1f2937;
+  stroke-width: 1.5;
+}
+.infra-diagram .link-dash {
+  fill: none;
+  stroke: #374151;
+  stroke-width: 1.5;
+  stroke-dasharray: 6 7;
+}
+.infra-diagram .node-halo {
+  opacity: 0.5;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.infra-diagram .synapse-pulse {
+  fill: none;
+  stroke: #22d3ee;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 0.08 0.92;
+  stroke-dashoffset: 0;
+  opacity: 0;
+}
+
+/* Animación del diagrama: solo con el gate de movimiento activo */
+html[data-motion="on"] .infra-diagram .synapse-pulse {
+  opacity: 1;
+  animation: synapse 2.6s linear infinite;
+}
+html[data-motion="on"] .infra-diagram .node-halo {
+  animation: halo-pulse 2.4s ease-in-out infinite;
+}
+/* Fuera de pantalla: animación en pausa (ahorra CPU) */
+html[data-motion="on"] .infra-diagram:not(.is-visible) .synapse-pulse,
+html[data-motion="on"] .infra-diagram:not(.is-visible) .node-halo {
+  animation-play-state: paused;
+}
+
+@keyframes synapse {
+  to {
+    stroke-dashoffset: 1;
+  }
+}
+@keyframes halo-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.35);
+    opacity: 0.25;
+  }
+}
+
+/* Parallax por capas: el JS escribe --px/--py en el contenedor.
+   Sin JS ambas variables valen 0 y no hay movimiento. */
+html[data-motion="on"] .infra-diagram .layer-links,
+html[data-motion="on"] .infra-diagram .layer-satellites,
+html[data-motion="on"] .infra-diagram .layer-core,
+html[data-motion="on"] .infra-diagram .layer-labels {
+  transition: transform var(--motion-fast) var(--motion-ease);
+}
+.infra-diagram .layer-links,
+.infra-diagram .layer-satellites,
+.infra-diagram .layer-core,
+.infra-diagram .layer-labels {
+  transform: translate(
+    calc(var(--px, 0) * var(--depth, 0) * 6px),
+    calc(var(--py, 0) * var(--depth, 0) * 6px)
+  );
+}
+
 /* Interruptor general: prefers-reduced-motion anula todo el movimiento */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -89,5 +170,14 @@ html[data-motion="on"] [data-reveal].is-visible[data-tilt] {
   }
   .infra-diagram [class] {
     animation: none !important;
+  }
+  .infra-diagram .synapse-pulse {
+    display: none;
+  }
+  .infra-diagram .layer-links,
+  .infra-diagram .layer-satellites,
+  .infra-diagram .layer-core,
+  .infra-diagram .layer-labels {
+    transform: none !important;
   }
 }
