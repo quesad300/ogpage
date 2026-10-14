@@ -1,0 +1,50 @@
+---
+const LINKEDIN_PROFILE =
+  "https://www.linkedin.com/in/jos%C3%A9-oswaldo-guerrero-p%C3%A9rez-2843791aa";
+
+const equipo = [
+  {
+    nombre: "José Oswaldo Guerrero Pérez",
+    rol: "Desarrollador backend y DevOps",
+    bio: "8 años de experiencia construyendo sistemas administrativos, APIs y plataformas GPS para empresas. Infraestructura propia y entrega continua.",
+    linkedin: LINKEDIN_PROFILE,
+  },
+  // [PENDIENTE: perfiles de futuros integrantes del equipo]
+];
+---
+
+<section id="equipo" class="py-20 bg-[#111827]">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-4">
+      Quiénes somos
+    </h2>
+    <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+      Trabajas directamente con las personas que desarrollan tu proyecto: sin
+      intermediarios y con comunicación directa.
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+      {equipo.map((persona) => (
+        <div class="bg-[#0b0f19] rounded-lg border border-gray-800 p-6 text-center hover:border-[#3b82f6] transition-colors duration-200">
+          <div
+            class="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-full bg-[#3b82f6]/10 border border-[#3b82f6]/30 text-[#3b82f6] text-2xl font-bold"
+            aria-hidden="true"
+          >
+            {persona.nombre.charAt(0)}
+          </div>
+          <p class="text-lg font-semibold text-white">{persona.nombre}</p>
+          <p class="text-[#3b82f6] text-sm mb-3">{persona.rol}</p>
+          <p class="text-gray-400 text-sm mb-5">{persona.bio}</p>
+          <a
+            href={persona.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm text-gray-300 underline decoration-gray-600 underline-offset-4 hover:text-[#3b82f6] hover:decoration-[#3b82f6] transition-colors"
+          >
+            Ver perfil de LinkedIn
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
