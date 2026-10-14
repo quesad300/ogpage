@@ -58,8 +58,13 @@ const process = [
     </h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {services.map((service) => (
-        <div class="bg-[#111827] p-6 rounded-lg border border-gray-800 hover:border-[#3b82f6] transition-colors duration-200">
+      {services.map((service, i) => (
+        <div
+          data-reveal
+          data-tilt
+          style={`--reveal-delay:${i % 3}`}
+          class="bg-[#111827] p-6 rounded-lg border border-gray-800 hover:border-[#3b82f6] transition-colors duration-200"
+        >
           <h3 class="text-xl font-semibold text-white mb-3">
             {service.title}
           </h3>
@@ -76,8 +81,12 @@ const process = [
       </h3>
 
       <ol class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {process.map((step) => (
-          <li class="bg-[#111827] p-6 rounded-lg border border-gray-800">
+        {process.map((step, i) => (
+          <li
+            data-reveal
+            style={`--reveal-delay:${i % 4}`}
+            class="bg-[#111827] p-6 rounded-lg border border-gray-800"
+          >
             <p class="text-sm font-semibold text-[#3b82f6] uppercase tracking-widest mb-3">
               {step.title}
             </p>

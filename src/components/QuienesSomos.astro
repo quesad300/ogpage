@@ -25,7 +25,11 @@ const equipo = [
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
       {equipo.map((persona) => (
-        <div class="bg-[#0b0f19] rounded-lg border border-gray-800 p-6 text-center hover:border-[#3b82f6] transition-colors duration-200">
+        <div
+          data-reveal
+          data-tilt
+          class="bg-[#0b0f19] rounded-lg border border-gray-800 p-6 text-center hover:border-[#3b82f6] transition-colors duration-200"
+        >
           <div
             class="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-full bg-[#3b82f6]/10 border border-[#3b82f6]/30 text-[#3b82f6] text-2xl font-bold"
             aria-hidden="true"
